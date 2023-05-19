@@ -7,14 +7,6 @@ import (
 	"golang.org/x/exp/constraints"
 )
 
-func unref(p unsafe.Pointer) unsafe.Pointer {
-	return *(*unsafe.Pointer)(p)
-}
-
-func ref(p unsafe.Pointer) unsafe.Pointer {
-	return unsafe.Pointer(&p)
-}
-
 // StoreMap atomically stores a map, given a pointer to it.
 // It is a high-efficient method, because `map` is a actually
 // just a pointer to a structure, so this is effectively just

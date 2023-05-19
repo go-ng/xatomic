@@ -6,15 +6,38 @@
 
 This package just provides with additional primitives to available in [`sync/atomic`](https://pkg.go.dev/sync/atomic).
 
-Right now it provides with only two functions:
+Right now it provides with only 4 functions:
 
 * [`LoadMap`](https://pkg.go.dev/github.com/go-ng/xatomic#LoadMap), which works similar to [`atomic.LoadUint64`](https://pkg.go.dev/sync/atomic#LoadUint64), but for a `map`, instead of `uint64`.
 * [`StoreMap`](https://pkg.go.dev/github.com/go-ng/xatomic#StoreMap), which works similar to [`atomic.StoreUint64`](https://pkg.go.dev/sync/atomic#StoreUint64), but for a `map`, instead of `uint64`.
+* [`LoadPointer`](https://pkg.go.dev/github.com/go-ng/xatomic#LoadPointer), which works similar to [`atomic.LoadPointer`](https://pkg.go.dev/sync/atomic#LoadPointer), but avoids necessity to manually work with the `unsafe` package.
+* [`StorePointer`](https://pkg.go.dev/github.com/go-ng/xatomic#StorePointer), which works similar to [`atomic.StorePointer`](https://pkg.go.dev/sync/atomic#StorePointer), but avoids necessity to manually work with the `unsafe` package.
 
-An example:
+## Examples
+
+### `Pointer`
 
 ```go
+import "github.com/go-ng/xatomic"
 
+    ...
+    var m *myStruct
+    ...
+    go func(){
+        ...
+        xatomic.StorePointer(&m, &myStruct{Err: myErr})
+        ...
+    }()
+    go func(){
+        ...
+        fmt.Println(xatomic.LoadPointer(&m).Err.Error())
+        ...
+    }()
+```
+
+### `Slice`
+
+```go
 import "github.com/go-ng/xatomic"
 
 
