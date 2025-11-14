@@ -48,3 +48,19 @@ func SwapPointer[T any](addr **T, new *T) *T {
 		unsafe.Pointer(new),
 	))
 }
+
+type Pointer[T any] struct {
+	Pointer *T
+}
+
+func (ptr *Pointer[T]) Store(new *T) {
+	StorePointer(&ptr.Pointer, new)
+}
+
+func (ptr *Pointer[T]) Load() *T {
+	return LoadPointer(&ptr.Pointer)
+}
+
+func (ptr *Pointer[T]) CompareAndSwap(old, new *T) bool {
+	return CompareAndSwapPointer(&ptr.Pointer, old, new)
+}
