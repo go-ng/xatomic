@@ -61,6 +61,10 @@ func (ptr *Pointer[T]) Load() *T {
 	return LoadPointer(&ptr.Pointer)
 }
 
+func (ptr *Pointer[T]) Swap(new *T) *T {
+	return SwapPointer(&ptr.Pointer, new)
+}
+
 func (ptr *Pointer[T]) CompareAndSwap(old, new *T) bool {
 	return CompareAndSwapPointer(&ptr.Pointer, old, new)
 }

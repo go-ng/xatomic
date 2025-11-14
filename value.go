@@ -1,42 +1,33 @@
 package xatomic
 
-import (
-	"sync/atomic"
-)
-
 // Value is a wrapper around a customly typed value that provides atomic operations.
 type Value[T any] struct {
-	Value atomic.Value
+	Pointer[T]
 }
 
 // Load returns the value set by the most recent Store.
 // It returns zero value if there has been no call to Store for this Value.
 func (v *Value[T]) Load() T {
-	cur := v.Value.Load()
-	if cur == nil {
+	ptr := v.Pointer.Load()
+	if ptr == nil {
 		var zero T
 		return zero
 	}
-	return cur.(T)
+	return *ptr
 }
 
 // Store sets the value of the [Value] v to val.
 func (v *Value[T]) Store(new T) {
-	v.Value.Store(new)
+	v.Pointer.Store(&new)
 }
 
 // Swap stores new into Value and returns the previous value. It returns zero value
 // if the Value is empty.
 func (v *Value[T]) Swap(new T) (old T) {
-	cur := v.Value.Swap(new)
-	if cur == nil {
+	curPtr := v.Pointer.Swap(&new)
+	if curPtr == nil {
 		var zero T
 		return zero
 	}
-	return cur.(T)
-}
-
-// CompareAndSwap executes the compare-and-swap operation for the [Value].
-func (v *Value[T]) CompareAndSwap(old, new T) (swapped bool) {
-	return v.Value.CompareAndSwap(old, new)
+	return *curPtr
 }
