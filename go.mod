@@ -1,10 +1,12 @@
 module github.com/go-ng/xatomic
 
-go 1.20
+go 1.22.2
+
+toolchain go1.24.2
 
 require (
-	github.com/stretchr/testify v1.8.3
-	golang.org/x/exp v0.0.0-20230519143937-03e91628a987
+	github.com/stretchr/testify v1.8.4
+	golang.org/x/exp v0.0.0-20230626212559-97b1e661b5df
 )
 
 require (
