@@ -17,6 +17,14 @@ func Uint32FromPointer(v *uint32) *Uint32 {
 	return (*Uint32)(unsafe.Pointer(v))
 }
 
+func (v *Uint32) Generic() *Integer[uint32] {
+	return (*Integer[uint32])(v)
+}
+
+func (v *Uint32) Std() *atomic.Uint32 {
+	return (*atomic.Uint32)(unsafe.Pointer(v))
+}
+
 func (v *Uint32) Load() uint32 {
 	return atomic.LoadUint32((*uint32)(&v.Value))
 }

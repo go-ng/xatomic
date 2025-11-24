@@ -17,6 +17,14 @@ func Int64FromPointer(v *int64) *Int64 {
 	return (*Int64)(unsafe.Pointer(v))
 }
 
+func (v *Int64) Generic() *Integer[int64] {
+	return (*Integer[int64])(v)
+}
+
+func (v *Int64) Std() *atomic.Int64 {
+	return (*atomic.Int64)(unsafe.Pointer(v))
+}
+
 func (v *Int64) Load() int64 {
 	return atomic.LoadInt64((*int64)(&v.Value))
 }
